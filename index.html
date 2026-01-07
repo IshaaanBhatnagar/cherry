@@ -287,6 +287,37 @@
             .main-wrapper {
                 padding: 15px 5px;
             }
+
+            .controls {
+                bottom: 20px;
+                right: 20px;
+                gap: 15px;
+            }
+
+            .gold-btn {
+                background: none;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                font-size: 1.8rem;
+                color: var(--gold-light);
+                text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            }
+
+            .gold-btn:hover {
+                background: none;
+                box-shadow: none;
+                transform: none;
+            }
+
+            .gold-btn .btn-text {
+                display: none;
+            }
+
+            .btn-icon {
+                padding: 0;
+                font-size: 1.5rem;
+            }
         }
 
         /* --- CONFETTI --- */
@@ -599,7 +630,7 @@
         <!-- CONTROLS -->
         <div class="controls">
             <div class="now-playing" id="nowPlaying"></div>
-            <button class="gold-btn" onclick="toggleMusic()" id="musicBtn">🎵 Music</button>
+            <button class="gold-btn" onclick="toggleMusic()" id="musicBtn"><span class="btn-icon-only">▶</span><span class="btn-text"> Music</span></button>
             <button class="gold-btn btn-icon" onclick="nextSong()" title="Next Song">⏭</button>
         </div>
 
@@ -806,7 +837,7 @@
                     const audio = document.getElementById('bgMusic');
                     audio.src = myPlaylist[0];
                     audio.play().then(() => {
-                        document.getElementById('musicBtn').innerHTML = "⏸ Pause";
+                        document.getElementById('musicBtn').innerHTML = '<span class="btn-icon-only">⏸</span><span class="btn-text"> Pause</span>';
                         document.getElementById('nowPlaying').textContent = '♪ ' + myPlaylist[0].split('/').pop().replace(/\.[^/.]+$/, '');
                     }).catch(e => console.log("Autoplay blocked"));
                 }, 2000);
@@ -1043,11 +1074,11 @@
                     audio.src = myPlaylist[currentTrack];
                 }
                 audio.play().catch(e => alert("Please add song files to 'media' folder!"));
-                mBtn.innerHTML = "⏸ Pause";
+                mBtn.innerHTML = '<span class="btn-icon-only">⏸</span><span class="btn-text"> Pause</span>';
                 updateNowPlaying();
             } else {
                 audio.pause();
-                mBtn.innerHTML = "🎵 Music";
+                mBtn.innerHTML = '<span class="btn-icon-only">▶</span><span class="btn-text"> Music</span>';
             }
         }
 
@@ -1056,7 +1087,7 @@
             currentTrack = (currentTrack + 1) % myPlaylist.length;
             audio.src = myPlaylist[currentTrack];
             audio.play().catch(e => console.log("Next song failed load"));
-            mBtn.innerHTML = "⏸ Pause";
+            mBtn.innerHTML = '<span class="btn-icon-only">⏸</span><span class="btn-text"> Pause</span>';
             updateNowPlaying();
         }
 
