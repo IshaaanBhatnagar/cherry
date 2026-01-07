@@ -483,15 +483,6 @@
             50% { opacity: 1; }
         }
 
-        .tap-counter {
-            position: absolute;
-            bottom: 50px;
-            font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
-            color: var(--gold-dark);
-            letter-spacing: 2px;
-        }
-
         .intro-sparkles {
             position: absolute;
             width: 100%;
@@ -528,7 +519,6 @@
         <div class="present-box" id="presentBox">🎁</div>
         <div class="intro-text" id="introText">A Special Gift for Cherry</div>
         <div class="tap-hint" id="tapHint">Tap the present!</div>
-        <div class="tap-counter" id="tapCounter"></div>
     </div>
 
     <!-- MAIN CONTENT (hidden initially) -->
@@ -577,21 +567,52 @@
         const presentBox = document.getElementById('presentBox');
         const introText = document.getElementById('introText');
         const tapHint = document.getElementById('tapHint');
-        const tapCounter = document.getElementById('tapCounter');
         const mainContent = document.getElementById('mainContent');
         const introSparkles = document.getElementById('introSparkles');
 
         let tapCount = 0;
-        const requiredTaps = 5;
+        const requiredTaps = 3;
         let introComplete = false;
 
         const messages = [
             "A Special Gift for Cherry",
             "Keep tapping...",
-            "Almost there...",
-            "One more time!",
             "Here it comes!"
         ];
+
+        // Sound effects using Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playTapSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.value = 800 + Math.random() * 400;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+
+        function playExplosionSound() {
+            // Create a burst of sounds for explosion
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.frequency.value = 200 + Math.random() * 600;
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.3);
+                }, i * 50);
+            }
+        }
 
         // Create sparkles for intro
         function createIntroSparkle(x, y) {
@@ -677,7 +698,13 @@
         presentBox.addEventListener('click', function(e) {
             if (introComplete) return;
 
+            // Resume audio context (required by browsers)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
             tapCount++;
+            playTapSound();
 
             // Create sparkles around click
             for (let i = 0; i < 8; i++) {
@@ -693,16 +720,13 @@
                 introText.textContent = messages[Math.min(tapCount, messages.length - 1)];
             }
 
-            // Update counter
-            tapCounter.textContent = `${tapCount} / ${requiredTaps}`;
-
             // Add shake animation
             presentBox.classList.remove('shake', 'wiggle');
             void presentBox.offsetWidth; // Trigger reflow
             presentBox.classList.add('shake');
 
-            // Start wiggling after 3 taps
-            if (tapCount >= 3 && tapCount < requiredTaps) {
+            // Start wiggling after 2 taps
+            if (tapCount >= 2 && tapCount < requiredTaps) {
                 setTimeout(() => {
                     presentBox.classList.add('wiggle');
                 }, 500);
@@ -714,9 +738,9 @@
                 presentBox.classList.remove('shake', 'wiggle');
                 presentBox.classList.add('explode');
                 tapHint.style.opacity = '0';
-                tapCounter.style.opacity = '0';
 
-                // Trigger the big explosion!
+                // Trigger the big explosion with sound!
+                playExplosionSound();
                 createExplosion();
 
                 setTimeout(() => {
