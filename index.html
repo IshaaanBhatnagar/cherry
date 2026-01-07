@@ -348,26 +348,207 @@
         .collage-item img {
             cursor: pointer;
         }
+
+        /* --- INTRO / PRESENT BOX --- */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #0a0a0a 100%);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .intro-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+
+        .present-box {
+            font-size: 120px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            user-select: none;
+        }
+
+        .present-box:active {
+            transform: scale(0.9);
+        }
+
+        .present-box.shake {
+            animation: shake 0.5s ease;
+        }
+
+        .present-box.wiggle {
+            animation: wiggle 0.3s ease infinite;
+        }
+
+        .present-box.explode {
+            animation: explode 0.6s ease forwards;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            20% { transform: translateX(-10px) rotate(-5deg); }
+            40% { transform: translateX(10px) rotate(5deg); }
+            60% { transform: translateX(-10px) rotate(-5deg); }
+            80% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(2) rotate(15deg); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .explosion-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 600;
+            animation: particle-fly 1.2s ease-out forwards;
+        }
+
+        @keyframes particle-fly {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .explosion-ring {
+            position: fixed;
+            border: 4px solid var(--gold-light);
+            border-radius: 50%;
+            z-index: 550;
+            transform: translate(-50%, -50%);
+            animation: ring-expand 1s ease-out forwards;
+        }
+
+        @keyframes ring-expand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+                border-width: 8px;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+                border-width: 2px;
+            }
+        }
+
+        .intro-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: var(--gold-light);
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .tap-hint {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--gold-dark);
+            margin-top: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .tap-counter {
+            position: absolute;
+            bottom: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--gold-dark);
+            letter-spacing: 2px;
+        }
+
+        .intro-sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .intro-sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Confetti Container -->
-    <div class="confetti-container" id="confettiContainer"></div>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
-        <img id="lightboxImg" src="" alt="Full size">
-        <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
-        <div class="lightbox-counter" id="lightboxCounter"></div>
+    <!-- INTRO OVERLAY -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-sparkles" id="introSparkles"></div>
+        <div class="present-box" id="presentBox">🎁</div>
+        <div class="intro-text" id="introText">A Special Gift for Cherry</div>
+        <div class="tap-hint" id="tapHint">Tap the present!</div>
+        <div class="tap-counter" id="tapCounter"></div>
     </div>
 
-    <div class="sparkle-container" id="sparkles"></div>
+    <!-- MAIN CONTENT (hidden initially) -->
+    <div class="main-content" id="mainContent">
 
-    <div class="main-wrapper">
+        <!-- Confetti Container -->
+        <div class="confetti-container" id="confettiContainer"></div>
+
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
+            <img id="lightboxImg" src="" alt="Full size">
+            <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+        </div>
+
+        <div class="sparkle-container" id="sparkles"></div>
+
+        <div class="main-wrapper">
         <header>
             <h1 class="glitter-text">Happy 2nd B'day Cherry</h1>
             <div class="subtitle">Our Little Golden Star</div>
@@ -377,16 +558,188 @@
         <div class="collage-grid" id="gridContainer"></div>
     </div>
 
-    <!-- CONTROLS -->
-    <div class="controls">
-        <button class="gold-btn" onclick="toggleMusic()" id="musicBtn">🎵 Music</button>
-        <button class="gold-btn btn-icon" onclick="nextSong()" title="Next Song">⏭</button>
-    </div>
+        <!-- CONTROLS -->
+        <div class="controls">
+            <button class="gold-btn" onclick="toggleMusic()" id="musicBtn">🎵 Music</button>
+            <button class="gold-btn btn-icon" onclick="nextSong()" title="Next Song">⏭</button>
+        </div>
 
-    <!-- Audio Element -->
-    <audio id="bgMusic"></audio>
+        <!-- Audio Element -->
+        <audio id="bgMusic"></audio>
+
+    </div> <!-- End main-content -->
 
     <script>
+        /* =========================================================
+           INTRO ANIMATION - PRESENT BOX
+           ========================================================= */
+        const introOverlay = document.getElementById('introOverlay');
+        const presentBox = document.getElementById('presentBox');
+        const introText = document.getElementById('introText');
+        const tapHint = document.getElementById('tapHint');
+        const tapCounter = document.getElementById('tapCounter');
+        const mainContent = document.getElementById('mainContent');
+        const introSparkles = document.getElementById('introSparkles');
+
+        let tapCount = 0;
+        const requiredTaps = 5;
+        let introComplete = false;
+
+        const messages = [
+            "A Special Gift for Cherry",
+            "Keep tapping...",
+            "Almost there...",
+            "One more time!",
+            "Here it comes!"
+        ];
+
+        // Create sparkles for intro
+        function createIntroSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'intro-sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.animation = 'sparkle-burst 0.6s ease forwards';
+            introSparkles.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 600);
+        }
+
+        // Add sparkle burst animation
+        const sparkleStyle = document.createElement('style');
+        sparkleStyle.textContent = `
+            @keyframes sparkle-burst {
+                0% { transform: scale(0); opacity: 1; }
+                50% { transform: scale(2); opacity: 1; }
+                100% { transform: scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(sparkleStyle);
+
+        // Create big explosion effect
+        function createExplosion() {
+            const rect = presentBox.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Create expanding rings
+            for (let r = 0; r < 3; r++) {
+                setTimeout(() => {
+                    const ring = document.createElement('div');
+                    ring.className = 'explosion-ring';
+                    ring.style.left = centerX + 'px';
+                    ring.style.top = centerY + 'px';
+                    document.body.appendChild(ring);
+                    setTimeout(() => ring.remove(), 1000);
+                }, r * 200);
+            }
+
+            // Create explosion particles
+            const colors = ['#bf953f', '#fcf6ba', '#ff69b4', '#87ceeb', '#fff', '#ffd700', '#ff6b6b', '#90EE90'];
+            const emojis = ['✨', '⭐', '💫', '🎉', '🎊', '💖', '🌟', '🍒'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+
+                    const angle = (i / 50) * Math.PI * 2 + Math.random() * 0.5;
+                    const distance = 200 + Math.random() * 250;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+
+                    particle.style.left = centerX + 'px';
+                    particle.style.top = centerY + 'px';
+                    particle.style.setProperty('--tx', tx + 'px');
+                    particle.style.setProperty('--ty', ty + 'px');
+
+                    // Mix of colored dots and emojis
+                    if (Math.random() > 0.5) {
+                        const size = 10 + Math.random() * 20;
+                        particle.style.width = size + 'px';
+                        particle.style.height = size + 'px';
+                        particle.style.borderRadius = '50%';
+                        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.boxShadow = '0 0 15px ' + particle.style.backgroundColor;
+                    } else {
+                        particle.style.fontSize = (24 + Math.random() * 24) + 'px';
+                        particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                        particle.style.background = 'none';
+                    }
+
+                    particle.style.animationDuration = (1 + Math.random() * 0.5) + 's';
+
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 1500);
+                }, i * 20); // Stagger particle creation
+            }
+        }
+
+        presentBox.addEventListener('click', function(e) {
+            if (introComplete) return;
+
+            tapCount++;
+
+            // Create sparkles around click
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 50 + Math.random() * 30;
+                const x = e.clientX + Math.cos(angle) * distance;
+                const y = e.clientY + Math.sin(angle) * distance;
+                setTimeout(() => createIntroSparkle(x, y), i * 30);
+            }
+
+            // Update message
+            if (tapCount <= messages.length) {
+                introText.textContent = messages[Math.min(tapCount, messages.length - 1)];
+            }
+
+            // Update counter
+            tapCounter.textContent = `${tapCount} / ${requiredTaps}`;
+
+            // Add shake animation
+            presentBox.classList.remove('shake', 'wiggle');
+            void presentBox.offsetWidth; // Trigger reflow
+            presentBox.classList.add('shake');
+
+            // Start wiggling after 3 taps
+            if (tapCount >= 3 && tapCount < requiredTaps) {
+                setTimeout(() => {
+                    presentBox.classList.add('wiggle');
+                }, 500);
+            }
+
+            // Final tap - reveal with EXPLOSION!
+            if (tapCount >= requiredTaps) {
+                introComplete = true;
+                presentBox.classList.remove('shake', 'wiggle');
+                presentBox.classList.add('explode');
+                tapHint.style.opacity = '0';
+                tapCounter.style.opacity = '0';
+
+                // Trigger the big explosion!
+                createExplosion();
+
+                setTimeout(() => {
+                    introText.textContent = "Happy Birthday Cherry! 🎂";
+                    introText.style.fontSize = '3rem';
+                }, 600);
+
+                setTimeout(() => {
+                    introOverlay.classList.add('hidden');
+                    mainContent.classList.add('visible');
+                    createConfetti(); // Launch confetti after reveal
+                }, 2000);
+            }
+        });
+
+        // Preload images in background during intro
+        function preloadImages(urls) {
+            urls.forEach(url => {
+                const img = new Image();
+                img.src = url;
+            });
+        }
+
         /* =========================================================
            STEP 1: YOUR MEDIA FILES
            (Note: I changed .heic to .jpeg below. You must convert them!)
@@ -458,6 +811,9 @@
         const myPlaylist = [
             "media/song.mp3"
         ];
+
+        // Start preloading images immediately
+        preloadImages(myMemories);
 
         /* --- GENERATE GRID --- */
         const gridContainer = document.getElementById('gridContainer');
@@ -572,8 +928,7 @@
             }, 6000);
         }
 
-        // Launch confetti on page load
-        createConfetti();
+        // Note: Confetti is now launched after intro animation completes
 
         /* --- LIGHTBOX --- */
         const lightbox = document.getElementById('lightbox');
