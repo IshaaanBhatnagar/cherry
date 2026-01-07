@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 2nd Birthday Cherry! ✨</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍒</text></svg>">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- CHAMPAGNE GOLD THEME --- */
+        :root {
+            --gold-dark: #c5a059;
+            --gold-light: #f3e5ab;
+            --bg-dark: #1a1a1a;
+            --text-light: #fdfcf5;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            font-family: 'Lato', sans-serif;
+            color: var(--text-light);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND SPARKLES --- */
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 8px var(--gold-light), 0 0 12px var(--gold-dark);
+            opacity: 0.9;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(110vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 2rem 0 4rem 0;
+        }
+
+        .glitter-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(4rem, 8vw, 7rem);
+            margin: 0;
+            line-height: 1.5;
+            padding: 0.2em 0;
+            background: linear-gradient(110deg,
+                    #bf953f 0%, #fff 10%, #b38728 20%, #fff 30%, #fcf6ba 40%, #aa771c 50%, #fff 60%, #bf953f 70%, #fff 80%, #aa771c 90%, #bf953f 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 2s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            margin-top: 10px;
+            border-top: 1px solid var(--gold-dark);
+            border-bottom: 1px solid var(--gold-dark);
+            display: inline-block;
+            padding: 8px 30px;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: -200% center;
+            }
+        }
+
+        /* --- MASONRY COLLAGE --- */
+        .collage-grid {
+            column-count: 3;
+            column-gap: 20px;
+            padding: 0 10px;
+        }
+
+        .collage-item {
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--gold-dark);
+            border-radius: 8px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #1a1a1a, #332a18);
+            break-inside: avoid;
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .collage-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(197, 160, 89, 0.4);
+            border-color: var(--gold-light);
+            z-index: 10;
+        }
+
+        .collage-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .collage-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 5px;
+        }
+
+        /* --- CONTROLS --- */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            /* Space between buttons */
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #bf953f, #b38728);
+            border: 1px solid #fcf6ba;
+            color: #1a1a1a;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .gold-btn:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #fcf6ba, #fbf5b7);
+            box-shadow: 0 0 20px var(--gold-light);
+        }
+
+        .btn-icon {
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Debugging Text Style */
+        .error-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff6b6b;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+            width: 90%;
+            word-wrap: break-word;
+            z-index: 5;
+        }
+
+        @media (max-width: 1024px) {
+            .collage-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .collage-grid {
+                column-count: 1;
+                padding: 0 10px;
+            }
+
+            .glitter-text {
+                font-size: 3.5rem;
+            }
+
+            .main-wrapper {
+                padding: 20px 10px;
+            }
+        }
+
+        /* --- CONFETTI --- */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            top: -10px;
+            opacity: 0;
+            animation: confetti-fall 4s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                top: -10px;
+                transform: translateX(0) rotateZ(0deg);
+            }
+            100% {
+                opacity: 0;
+                top: 100vh;
+                transform: translateX(var(--drift)) rotateZ(720deg);
+            }
+        }
+
+        /* --- LIGHTBOX --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: var(--gold-light);
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+            z-index: 310;
+        }
+
+        .lightbox-close:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            color: var(--gold-light);
+            cursor: pointer;
+            padding: 20px;
+            transition: transform 0.2s, color 0.2s;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            color: #fff;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .collage-item img {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
+        <img id="lightboxImg" src="" alt="Full size">
+        <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <div class="sparkle-container" id="sparkles"></div>
+
+    <div class="main-wrapper">
+        <header>
+            <h1 class="glitter-text">Happy 2nd B'day Cherry</h1>
+            <div class="subtitle">Our Little Golden Star</div>
+        </header>
+
+        <!-- Grid Container -->
+        <div class="collage-grid" id="gridContainer"></div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="gold-btn" onclick="toggleMusic()" id="musicBtn">🎵 Music</button>
+        <button class="gold-btn btn-icon" onclick="nextSong()" title="Next Song">⏭</button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic"></audio>
+
+    <script>
+        /* =========================================================
+           STEP 1: YOUR MEDIA FILES
+           (Note: I changed .heic to .jpeg below. You must convert them!)
+           ========================================================= */
+        const myMemories = [
+            "media/F8FC6EDB-74D4-4478-B308-4E40E6663F76.jpeg",
+            "media/0BD45765-587D-4AC1-99AC-36A8F52467C5.jpeg",
+            "media/0EF0B654-BE65-4C29-B035-584D9ADAE181.jpeg",
+            "media/1E95365F-FC04-4B6D-976F-558B3947ABE4.jpeg",
+            "media/1EFEEC8C-4572-42D5-8A7C-9424569A2F03.jpeg",
+            "media/002BBDFA-1A9A-468F-95BE-E1A6C1B59DBB_1_201_a.jpeg",
+            "media/2DEFC454-B4BD-48ED-83A1-404DEC7F9F12.jpeg",
+            "media/03CDEC9F-0A4C-4A08-B9AD-9AFAD59C9E4D.jpeg",
+            "media/6FF6BB26-1CB7-47E2-BA49-DF7809521BDC_1_201_a.jpeg",
+            "media/7D8611EE-E2F5-4A4C-A9B6-A450B187BA31_1_201_a.jpeg",
+            "media/8AB90D2E-3D59-4DFC-BA81-85A085B96B2E.jpeg",
+            "media/8ABC9176-F8EA-42D2-A3DD-93B6954698BA.jpeg", /* MUST CONVERT .heic to .jpeg */
+            "media/8CC0330E-1622-4D07-AF25-73C958C63DAF.jpeg",
+            "media/12C9B2BB-3741-45E8-9BA2-1EC46903138D.jpeg",
+            "media/13D4BCBC-1489-4E92-ADBC-194F4C18982B.jpeg",
+            "media/14FD5E1B-3893-4F36-9961-5497E2BF8078.jpeg",
+            "media/25E513FA-09EB-4AE8-9CCE-571F5F5B27B9.jpeg",
+            "media/28A926BE-70F5-4F2E-B70D-3AC8A68F960A.jpeg",
+            "media/53E2497F-C133-4A8D-AB94-26EF7FBA966F.jpeg",
+            "media/67FA2CD5-270C-4FF3-B80C-571497EBCAF1.jpeg",
+            "media/69D5968F-B16C-4069-9167-62F9D0ABE7BE.jpeg",
+            "media/72EA6A11-5F49-4676-8F0F-109CEB10832C.jpeg",
+            "media/77F51C14-0C80-450A-9F81-25112438BB9F.jpeg",
+            "media/83B650C7-D248-436B-94A5-E57908C9880D.jpeg",
+            "media/83D998F8-E31F-4D2C-A082-7A25A207B183.jpeg",
+            "media/89A5C957-DC65-4EFF-B048-E32BA9A7BDE0.jpeg",
+            "media/98ACE915-09DB-4ACC-AE5D-B610AA8BA0AA.jpeg",
+            "media/98F6A663-4B7B-4797-BE2D-9109D4472668.jpeg",
+            "media/340F356D-ABE9-4E8B-9C3F-7E3DAF1141F9.jpeg",
+            "media/688AD9BE-50BD-4DDE-86F1-00DB968B2042.jpeg",
+            "media/773E142D-8E6B-401F-813D-A95386F0753E.jpeg",
+            "media/966C685A-E9B8-44D2-A61A-D3C50EBD8C8F_1_201_a.jpeg", /* MUST CONVERT .heic to .jpeg */
+            "media/2519BBFA-ACFF-43B7-A20F-4D7244236F85.jpeg",
+            "media/5354DD25-C358-4744-813A-E9E841FFA550.jpeg",
+            "media/5795CEBB-7F79-4709-ACA2-1435CE87AC61.jpeg",
+            "media/6434F533-0F9D-4BA0-BE7F-1A13A7FC14B6.jpeg",
+            "media/9411A944-1083-4430-9821-09D7C43A0C62.jpeg", /* MUST CONVERT .heic to .jpeg */
+            "media/44142B58-9DF7-4146-946F-36F7F43F5588_1_201_a.jpeg",
+            "media/70746DAC-4552-47EB-8879-9BAAAD6AF9F0.jpeg",
+            "media/85639ABE-DDF2-42CE-B501-ED9DD9962D35.jpeg",
+            "media/795609A8-A18F-49F5-8D4C-AADE9A0F75F0.jpeg",
+            "media/ADF3CF6C-CD7B-4A23-A1FD-05EDB720FF57.jpeg",
+            "media/B9CBE78B-6F58-4FF8-BD06-BFEF5C7E692C.jpeg",
+            "media/B95CF7FA-2DCB-4613-BEBC-2728E115AF67_1_201_a.jpeg",
+            "media/CEE74591-8DCA-430C-81A0-3CFC8DA1635C.jpeg",
+            "media/D6588789-6BB4-4655-BCDD-5354DBF008F4.jpeg",
+            "media/DD6FF03F-7CA8-44E2-9C0F-3B27E00E8823.jpeg",
+            "media/E2A9789D-C54E-427D-96CA-DE4888676BDD.jpeg",
+            "media/E3798E84-82AB-45E8-B6E0-E8BF8EB667E8.jpeg",
+            "media/ED1A1E94-674E-49DE-A12E-02B141284164_1_102_o.jpeg",
+            "media/ED4661DB-13F2-4B99-AAF9-D58BB3BBF016.jpeg",
+            "media/08427C11-C3F2-4ACF-A691-56A223A2F16C.jpeg",
+            "media/2D302CC1-2566-457C-98BE-9FC423693DFF.jpeg",
+            "media/5E42311A-BD91-4230-9FE0-8AEACC9A012B.jpeg",
+            "media/69CC113B-6D5C-445D-9DC4-D348A50FE812.jpeg",
+            "media/C5AD2A11-0A3F-4F40-88D8-F22029758B70.jpeg",
+            "media/CCF17763-0EA8-4C44-8340-C1C57F1B3644.jpeg",
+            "media/489BB898-3B84-4B67-9802-9984D2E3324A.png"
+        ];
+
+        /* =========================================================
+           STEP 2: ADD YOUR SONGS HERE (Playlist)
+           ========================================================= */
+        const myPlaylist = [
+            "media/song.mp3"
+        ];
+
+        /* --- GENERATE GRID --- */
+        const gridContainer = document.getElementById('gridContainer');
+        myMemories.forEach((file, index) => {
+            const item = document.createElement('div');
+            item.classList.add('collage-item');
+            if (file.toLowerCase().endsWith('.mp4') || file.toLowerCase().endsWith('.webm')) {
+                const vid = document.createElement('video');
+                vid.src = file;
+                vid.controls = true;
+                item.appendChild(vid);
+            } else {
+                const img = document.createElement('img');
+                img.src = file;
+                img.alt = "Memory " + (index + 1);
+
+                // DEBUGGING FEATURE: Show missing filename in the box
+                img.onerror = function () {
+                    this.style.display = 'none'; // Hide broken image icon
+                    const msg = document.createElement('div');
+                    msg.classList.add('error-msg');
+                    msg.innerHTML = `⚠️ Missing:<br>${file}`;
+                    item.appendChild(msg);
+                    console.error("Missing file:", file);
+                };
+
+                item.appendChild(img);
+            }
+            gridContainer.appendChild(item);
+        });
+
+        /* --- PARTICLES --- */
+        const sparkleContainer = document.getElementById('sparkles');
+        for (let i = 0; i < 200; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 4 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.background = Math.random() > 0.5 ? '#fcf6ba' : '#bf953f';
+            p.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            p.style.animationDelay = (Math.random() * -15) + 's';
+            sparkleContainer.appendChild(p);
+        }
+
+        /* --- MUSIC PLAYLIST LOGIC --- */
+        const audio = document.getElementById('bgMusic');
+        const mBtn = document.getElementById('musicBtn');
+        let currentTrack = 0;
+
+        // Auto-play next track when current ends
+        audio.addEventListener('ended', () => {
+            nextSong();
+        });
+
+        function toggleMusic() {
+            if (audio.paused) {
+                // If no song loaded yet, load first one
+                if (!audio.src || audio.src === window.location.href) {
+                    audio.src = myPlaylist[currentTrack];
+                }
+                audio.play().catch(e => alert("Please add song files to 'media' folder!"));
+                mBtn.innerHTML = "⏸ Pause";
+            } else {
+                audio.pause();
+                mBtn.innerHTML = "🎵 Music";
+            }
+        }
+
+        function nextSong() {
+            // Increment track index, loop back to 0 if at end
+            currentTrack = (currentTrack + 1) % myPlaylist.length;
+            audio.src = myPlaylist[currentTrack];
+            audio.play().catch(e => console.log("Next song failed load"));
+            mBtn.innerHTML = "⏸ Pause";
+        }
+
+        /* --- CONFETTI BURST --- */
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#bf953f', '#fcf6ba', '#ff69b4', '#87ceeb', '#fff', '#ffd700'];
+            const shapes = ['square', 'circle'];
+
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const size = Math.random() * 10 + 5;
+                const left = Math.random() * 100;
+                const drift = (Math.random() - 0.5) * 200;
+                const delay = Math.random() * 2;
+                const duration = Math.random() * 2 + 3;
+
+                confetti.style.left = left + 'vw';
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                confetti.style.backgroundColor = color;
+                confetti.style.borderRadius = shape === 'circle' ? '50%' : '2px';
+                confetti.style.setProperty('--drift', drift + 'px');
+                confetti.style.animationDelay = delay + 's';
+                confetti.style.animationDuration = duration + 's';
+
+                container.appendChild(confetti);
+            }
+
+            // Remove confetti after animation
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 6000);
+        }
+
+        // Launch confetti on page load
+        createConfetti();
+
+        /* --- LIGHTBOX --- */
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCounter = document.getElementById('lightboxCounter');
+        let currentImageIndex = 0;
+        let loadedImages = [];
+
+        // Collect all successfully loaded images
+        document.querySelectorAll('.collage-item img').forEach((img, index) => {
+            img.addEventListener('load', function() {
+                loadedImages.push({ src: this.src, index: index });
+            });
+            img.addEventListener('click', function() {
+                openLightbox(this.src);
+            });
+        });
+
+        function openLightbox(src) {
+            // Find current index in loaded images
+            currentImageIndex = loadedImages.findIndex(img => img.src === src);
+            if (currentImageIndex === -1) currentImageIndex = 0;
+
+            lightboxImg.src = src;
+            updateCounter();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            if (loadedImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + direction + loadedImages.length) % loadedImages.length;
+            lightboxImg.src = loadedImages[currentImageIndex].src;
+            updateCounter();
+        }
+
+        function updateCounter() {
+            lightboxCounter.textContent = (currentImageIndex + 1) + ' / ' + loadedImages.length;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+        // Close on backdrop click
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) closeLightbox();
+        });
+    </script>
+</body>
+
+</html>
