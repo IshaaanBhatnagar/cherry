@@ -802,7 +802,23 @@
             "media/69CC113B-6D5C-445D-9DC4-D348A50FE812.jpeg",
             "media/C5AD2A11-0A3F-4F40-88D8-F22029758B70.jpeg",
             "media/CCF17763-0EA8-4C44-8340-C1C57F1B3644.jpeg",
-            "media/489BB898-3B84-4B67-9802-9984D2E3324A.png"
+            "media/489BB898-3B84-4B67-9802-9984D2E3324A.png",
+            "media/PHOTO-2026-01-07-14-55-07.jpg",
+            "media/PHOTO-2026-01-07-14-55-16 2.jpg",
+            "media/PHOTO-2026-01-07-14-55-16 3.jpg",
+            "media/PHOTO-2026-01-07-14-55-16.jpg",
+            "media/PHOTO-2026-01-07-14-55-17 2.jpg",
+            "media/PHOTO-2026-01-07-14-55-17 3.jpg",
+            "media/PHOTO-2026-01-07-14-55-17.jpg",
+            "media/PHOTO-2026-01-07-14-55-18 2.jpg",
+            "media/PHOTO-2026-01-07-14-55-18 3.jpg",
+            "media/PHOTO-2026-01-07-14-55-18.jpg",
+            "media/PHOTO-2026-01-07-14-55-19.jpg",
+            "media/PHOTO-2026-01-07-14-56-36.jpg",
+            "media/VIDEO-2026-01-07-14-53-47.mp4",
+            "media/VIDEO-2026-01-07-14-55-04.mp4",
+            "media/VIDEO-2026-01-07-14-56-35.mp4",
+            "media/VIDEO-2026-01-07-14-56-40.mp4"
         ];
 
         /* =========================================================
@@ -811,6 +827,16 @@
         const myPlaylist = [
             "media/song.mp3"
         ];
+
+        // Shuffle the memories array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        shuffleArray(myMemories);
 
         // Start preloading images immediately
         preloadImages(myMemories);
