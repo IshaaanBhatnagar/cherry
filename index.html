@@ -834,7 +834,7 @@
             "media/BalloonPlanet - Edge of Sight.mp3"
         ];
 
-        // Shuffle the memories array
+        // Shuffle array function
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -843,6 +843,7 @@
             return array;
         }
         shuffleArray(myMemories);
+        shuffleArray(myPlaylist);
 
         // Start preloading images immediately
         preloadImages(myMemories);
