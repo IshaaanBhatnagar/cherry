@@ -75,9 +75,9 @@
         .main-wrapper {
             position: relative;
             z-index: 2;
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 30px;
         }
 
         /* --- HEADER --- */
@@ -155,6 +155,26 @@
             object-fit: cover;
             display: block;
             border-radius: 5px;
+            cursor: pointer;
+            animation: kenburns 6s ease-in-out infinite alternate;
+        }
+
+        .collage-item:nth-child(even) img {
+            animation-name: kenburns-reverse;
+        }
+
+        .collage-item:hover img {
+            animation-play-state: paused;
+        }
+
+        @keyframes kenburns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        @keyframes kenburns-reverse {
+            0% { transform: scale(1.15); }
+            100% { transform: scale(1); }
         }
 
         .collage-item video {
@@ -172,7 +192,28 @@
             z-index: 100;
             display: flex;
             gap: 10px;
-            /* Space between buttons */
+            align-items: center;
+        }
+
+        .now-playing {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--gold-dark);
+            border-radius: 25px;
+            padding: 10px 20px;
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .now-playing {
+                display: block;
+            }
         }
 
         .gold-btn {
@@ -348,10 +389,6 @@
             font-family: 'Cinzel', serif;
             font-size: 1rem;
             letter-spacing: 2px;
-        }
-
-        .collage-item img {
-            cursor: pointer;
         }
 
         /* --- INTRO / PRESENT BOX --- */
@@ -555,6 +592,7 @@
 
         <!-- CONTROLS -->
         <div class="controls">
+            <div class="now-playing" id="nowPlaying"></div>
             <button class="gold-btn" onclick="toggleMusic()" id="musicBtn">🎵 Music</button>
             <button class="gold-btn btn-icon" onclick="nextSong()" title="Next Song">⏭</button>
         </div>
@@ -761,8 +799,10 @@
                     // Auto-play music after reveal
                     const audio = document.getElementById('bgMusic');
                     audio.src = myPlaylist[0];
-                    audio.play().catch(e => console.log("Autoplay blocked"));
-                    document.getElementById('musicBtn').innerHTML = "⏸ Pause";
+                    audio.play().then(() => {
+                        document.getElementById('musicBtn').innerHTML = "⏸ Pause";
+                        document.getElementById('nowPlaying').textContent = '♪ ' + myPlaylist[0].split('/').pop().replace(/\.[^/.]+$/, '');
+                    }).catch(e => console.log("Autoplay blocked"));
                 }, 2000);
             }
         });
@@ -780,64 +820,67 @@
            (Note: I changed .heic to .jpeg below. You must convert them!)
            ========================================================= */
         const myMemories = [
-            "media/F8FC6EDB-74D4-4478-B308-4E40E6663F76.jpeg",
+            "media/002BBDFA-1A9A-468F-95BE-E1A6C1B59DBB_1_201_a.jpeg",
+            "media/03CDEC9F-0A4C-4A08-B9AD-9AFAD59C9E4D.jpeg",
+            "media/08427C11-C3F2-4ACF-A691-56A223A2F16C.jpeg",
             "media/0BD45765-587D-4AC1-99AC-36A8F52467C5.jpeg",
             "media/0EF0B654-BE65-4C29-B035-584D9ADAE181.jpeg",
-            "media/1E95365F-FC04-4B6D-976F-558B3947ABE4.jpeg",
-            "media/1EFEEC8C-4572-42D5-8A7C-9424569A2F03.jpeg",
-            "media/002BBDFA-1A9A-468F-95BE-E1A6C1B59DBB_1_201_a.jpeg",
-            "media/2DEFC454-B4BD-48ED-83A1-404DEC7F9F12.jpeg",
-            "media/03CDEC9F-0A4C-4A08-B9AD-9AFAD59C9E4D.jpeg",
-            "media/6FF6BB26-1CB7-47E2-BA49-DF7809521BDC_1_201_a.jpeg",
-            "media/7D8611EE-E2F5-4A4C-A9B6-A450B187BA31_1_201_a.jpeg",
-            "media/8AB90D2E-3D59-4DFC-BA81-85A085B96B2E.jpeg",
-            "media/8ABC9176-F8EA-42D2-A3DD-93B6954698BA.jpeg", /* MUST CONVERT .heic to .jpeg */
-            "media/8CC0330E-1622-4D07-AF25-73C958C63DAF.jpeg",
             "media/12C9B2BB-3741-45E8-9BA2-1EC46903138D.jpeg",
             "media/13D4BCBC-1489-4E92-ADBC-194F4C18982B.jpeg",
             "media/14FD5E1B-3893-4F36-9961-5497E2BF8078.jpeg",
+            "media/1E95365F-FC04-4B6D-976F-558B3947ABE4.jpeg",
+            "media/1EFEEC8C-4572-42D5-8A7C-9424569A2F03.jpeg",
+            "media/2519BBFA-ACFF-43B7-A20F-4D7244236F85.jpeg",
+            "media/255B2E8F-27A9-424A-A1D7-98E966A89AAD_4_5005_c.jpeg",
             "media/25E513FA-09EB-4AE8-9CCE-571F5F5B27B9.jpeg",
             "media/28A926BE-70F5-4F2E-B70D-3AC8A68F960A.jpeg",
+            "media/2D302CC1-2566-457C-98BE-9FC423693DFF.jpeg",
+            "media/2DEFC454-B4BD-48ED-83A1-404DEC7F9F12.jpeg",
+            "media/340F356D-ABE9-4E8B-9C3F-7E3DAF1141F9.jpeg",
+            "media/44142B58-9DF7-4146-946F-36F7F43F5588_1_201_a.jpeg",
+            "media/489BB898-3B84-4B67-9802-9984D2E3324A.png",
+            "media/5354DD25-C358-4744-813A-E9E841FFA550.jpeg",
             "media/53E2497F-C133-4A8D-AB94-26EF7FBA966F.jpeg",
+            "media/5795CEBB-7F79-4709-ACA2-1435CE87AC61.jpeg",
+            "media/5E42311A-BD91-4230-9FE0-8AEACC9A012B.jpeg",
+            "media/6434F533-0F9D-4BA0-BE7F-1A13A7FC14B6.jpeg",
             "media/67FA2CD5-270C-4FF3-B80C-571497EBCAF1.jpeg",
+            "media/688AD9BE-50BD-4DDE-86F1-00DB968B2042.jpeg",
+            "media/69CC113B-6D5C-445D-9DC4-D348A50FE812.jpeg",
             "media/69D5968F-B16C-4069-9167-62F9D0ABE7BE.jpeg",
+            "media/6FF6BB26-1CB7-47E2-BA49-DF7809521BDC_1_201_a.jpeg",
+            "media/70746DAC-4552-47EB-8879-9BAAAD6AF9F0.jpeg",
             "media/72EA6A11-5F49-4676-8F0F-109CEB10832C.jpeg",
+            "media/773E142D-8E6B-401F-813D-A95386F0753E.jpeg",
             "media/77F51C14-0C80-450A-9F81-25112438BB9F.jpeg",
+            "media/7D8611EE-E2F5-4A4C-A9B6-A450B187BA31_1_201_a.jpeg",
             "media/83B650C7-D248-436B-94A5-E57908C9880D.jpeg",
             "media/83D998F8-E31F-4D2C-A082-7A25A207B183.jpeg",
+            "media/85639ABE-DDF2-42CE-B501-ED9DD9962D35.jpeg",
             "media/89A5C957-DC65-4EFF-B048-E32BA9A7BDE0.jpeg",
+            "media/8AB90D2E-3D59-4DFC-BA81-85A085B96B2E.jpeg",
+            "media/8ABC9176-F8EA-42D2-A3DD-93B6954698BA.jpeg",
+            "media/8CC0330E-1622-4D07-AF25-73C958C63DAF.jpeg",
+            "media/9411A944-1083-4430-9821-09D7C43A0C62.jpeg",
+            "media/966C685A-E9B8-44D2-A61A-D3C50EBD8C8F_1_201_a.jpeg",
             "media/98ACE915-09DB-4ACC-AE5D-B610AA8BA0AA.jpeg",
             "media/98F6A663-4B7B-4797-BE2D-9109D4472668.jpeg",
-            "media/340F356D-ABE9-4E8B-9C3F-7E3DAF1141F9.jpeg",
-            "media/688AD9BE-50BD-4DDE-86F1-00DB968B2042.jpeg",
-            "media/773E142D-8E6B-401F-813D-A95386F0753E.jpeg",
-            "media/966C685A-E9B8-44D2-A61A-D3C50EBD8C8F_1_201_a.jpeg", /* MUST CONVERT .heic to .jpeg */
-            "media/2519BBFA-ACFF-43B7-A20F-4D7244236F85.jpeg",
-            "media/5354DD25-C358-4744-813A-E9E841FFA550.jpeg",
-            "media/5795CEBB-7F79-4709-ACA2-1435CE87AC61.jpeg",
-            "media/6434F533-0F9D-4BA0-BE7F-1A13A7FC14B6.jpeg",
-            "media/9411A944-1083-4430-9821-09D7C43A0C62.jpeg", /* MUST CONVERT .heic to .jpeg */
-            "media/44142B58-9DF7-4146-946F-36F7F43F5588_1_201_a.jpeg",
-            "media/70746DAC-4552-47EB-8879-9BAAAD6AF9F0.jpeg",
-            "media/85639ABE-DDF2-42CE-B501-ED9DD9962D35.jpeg",
-            "media/795609A8-A18F-49F5-8D4C-AADE9A0F75F0.jpeg",
             "media/ADF3CF6C-CD7B-4A23-A1FD-05EDB720FF57.jpeg",
-            "media/B9CBE78B-6F58-4FF8-BD06-BFEF5C7E692C.jpeg",
             "media/B95CF7FA-2DCB-4613-BEBC-2728E115AF67_1_201_a.jpeg",
+            "media/B9CBE78B-6F58-4FF8-BD06-BFEF5C7E692C.jpeg",
+            "media/C5AD2A11-0A3F-4F40-88D8-F22029758B70.jpeg",
+            "media/CCF17763-0EA8-4C44-8340-C1C57F1B3644.jpeg",
             "media/CEE74591-8DCA-430C-81A0-3CFC8DA1635C.jpeg",
             "media/D6588789-6BB4-4655-BCDD-5354DBF008F4.jpeg",
+            "media/DA609B58-702C-4E7B-AE20-8301499E3A17_4_5005_c 2.jpeg",
+            "media/DA609B58-702C-4E7B-AE20-8301499E3A17_4_5005_c.jpeg",
             "media/DD6FF03F-7CA8-44E2-9C0F-3B27E00E8823.jpeg",
             "media/E2A9789D-C54E-427D-96CA-DE4888676BDD.jpeg",
             "media/E3798E84-82AB-45E8-B6E0-E8BF8EB667E8.jpeg",
             "media/ED1A1E94-674E-49DE-A12E-02B141284164_1_102_o.jpeg",
+            "media/ED1A1E94-674E-49DE-A12E-02B141284164_4_5005_c.jpeg",
             "media/ED4661DB-13F2-4B99-AAF9-D58BB3BBF016.jpeg",
-            "media/08427C11-C3F2-4ACF-A691-56A223A2F16C.jpeg",
-            "media/2D302CC1-2566-457C-98BE-9FC423693DFF.jpeg",
-            "media/5E42311A-BD91-4230-9FE0-8AEACC9A012B.jpeg",
-            "media/69CC113B-6D5C-445D-9DC4-D348A50FE812.jpeg",
-            "media/C5AD2A11-0A3F-4F40-88D8-F22029758B70.jpeg",
-            "media/CCF17763-0EA8-4C44-8340-C1C57F1B3644.jpeg",
-            "media/489BB898-3B84-4B67-9802-9984D2E3324A.png",
+            "media/F8FC6EDB-74D4-4478-B308-4E40E6663F76.jpeg",
             "media/PHOTO-2026-01-07-14-55-07.jpg",
             "media/PHOTO-2026-01-07-14-55-16 2.jpg",
             "media/PHOTO-2026-01-07-14-55-16 3.jpg",
@@ -850,10 +893,42 @@
             "media/PHOTO-2026-01-07-14-55-18.jpg",
             "media/PHOTO-2026-01-07-14-55-19.jpg",
             "media/PHOTO-2026-01-07-14-56-36.jpg",
+            "media/PHOTO-2026-01-07-22-35-54 2.jpg",
+            "media/PHOTO-2026-01-07-22-35-54 3.jpg",
+            "media/PHOTO-2026-01-07-22-35-54.jpg",
+            "media/PHOTO-2026-01-07-22-39-52.jpg",
+            "media/PHOTO-2026-01-07-22-42-12.jpg",
+            "media/PHOTO-2026-01-07-22-43-44.jpg",
+            "media/PHOTO-2026-01-07-22-43-55.jpg",
+            "media/PHOTO-2026-01-07-22-44-43.jpg",
+            "media/PHOTO-2026-01-07-23-00-41.jpg",
+            "media/PHOTO-2026-01-07-23-00-42 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-42 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-42.jpg",
+            "media/PHOTO-2026-01-07-23-00-43 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-43 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-43.jpg",
+            "media/PHOTO-2026-01-07-23-00-44 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-44 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-44.jpg",
+            "media/PHOTO-2026-01-07-23-00-45 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-45 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-45 4.jpg",
+            "media/PHOTO-2026-01-07-23-00-45.jpg",
+            "media/PHOTO-2026-01-07-23-00-46 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-46 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-46.jpg",
+            "media/PHOTO-2026-01-07-23-00-47 2.jpg",
+            "media/PHOTO-2026-01-07-23-00-47 3.jpg",
+            "media/PHOTO-2026-01-07-23-00-47.jpg",
             "media/VIDEO-2026-01-07-14-53-47.mp4",
             "media/VIDEO-2026-01-07-14-55-04.mp4",
             "media/VIDEO-2026-01-07-14-56-35.mp4",
-            "media/VIDEO-2026-01-07-14-56-40.mp4"
+            "media/VIDEO-2026-01-07-14-56-40.mp4",
+            "media/VIDEO-2026-01-07-22-41-26.mp4",
+            "media/VIDEO-2026-01-07-22-42-30.mp4",
+            "media/VIDEO-2026-01-07-23-00-48 2.mp4",
+            "media/VIDEO-2026-01-07-23-00-48.mp4"
         ];
 
         /* =========================================================
@@ -861,12 +936,10 @@
            ========================================================= */
         const myPlaylist = [
             "media/song.mp3",
-            "media/Elifas Sonaru - Shopping Time.mp3",
-            "media/Tennessee Pistols - Jingle Bells.mp3",
-            "media/Dan Pundak - Piggyback - Stripped Version.mp3",
-            "media/Ikoliks - Get That Feeling.mp3",
-            "media/Energy Plus - Come On Everyone.mp3",
-            "media/BalloonPlanet - Edge of Sight.mp3"
+            "media/afternoon-serenade.mp3",
+            "media/hopeful-horizons.mp3",
+            "media/mellow-mornings.mp3",
+            "media/ukulele-stomp.mp3"
         ];
 
         // Shuffle array function
@@ -931,7 +1004,21 @@
         /* --- MUSIC PLAYLIST LOGIC --- */
         const audio = document.getElementById('bgMusic');
         const mBtn = document.getElementById('musicBtn');
+        const nowPlayingEl = document.getElementById('nowPlaying');
         let currentTrack = 0;
+
+        // Extract song name from file path
+        function getSongName(path) {
+            const filename = path.split('/').pop(); // Get filename
+            const name = filename.replace(/\.[^/.]+$/, ''); // Remove extension
+            return name;
+        }
+
+        // Update now-playing display
+        function updateNowPlaying() {
+            const songName = getSongName(myPlaylist[currentTrack]);
+            nowPlayingEl.textContent = '♪ ' + songName;
+        }
 
         // Auto-play next track when current ends
         audio.addEventListener('ended', () => {
@@ -946,6 +1033,7 @@
                 }
                 audio.play().catch(e => alert("Please add song files to 'media' folder!"));
                 mBtn.innerHTML = "⏸ Pause";
+                updateNowPlaying();
             } else {
                 audio.pause();
                 mBtn.innerHTML = "🎵 Music";
@@ -958,6 +1046,7 @@
             audio.src = myPlaylist[currentTrack];
             audio.play().catch(e => console.log("Next song failed load"));
             mBtn.innerHTML = "⏸ Pause";
+            updateNowPlaying();
         }
 
         /* --- CONFETTI BURST --- */
