@@ -752,6 +752,12 @@
                     introOverlay.classList.add('hidden');
                     mainContent.classList.add('visible');
                     createConfetti(); // Launch confetti after reveal
+
+                    // Auto-play music after reveal
+                    const audio = document.getElementById('bgMusic');
+                    audio.src = myPlaylist[0];
+                    audio.play().catch(e => console.log("Autoplay blocked"));
+                    document.getElementById('musicBtn').innerHTML = "⏸ Pause";
                 }, 2000);
             }
         });
