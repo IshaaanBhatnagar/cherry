@@ -123,8 +123,8 @@
 
         /* --- MASONRY COLLAGE --- */
         .collage-grid {
-            column-count: 3;
-            column-gap: 20px;
+            column-count: 4;
+            column-gap: 15px;
             padding: 0 10px;
         }
 
@@ -257,7 +257,13 @@
             z-index: 5;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
+            .collage-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
             .collage-grid {
                 column-count: 2;
             }
@@ -965,6 +971,11 @@
                 const vid = document.createElement('video');
                 vid.src = file;
                 vid.controls = true;
+                vid.preload = 'metadata';
+                vid.playsInline = true;
+                // Use generated thumbnail as poster
+                const thumbPath = file.replace('.mp4', '_thumb.jpg').replace('.webm', '_thumb.jpg');
+                vid.poster = thumbPath;
                 item.appendChild(vid);
             } else {
                 const img = document.createElement('img');
